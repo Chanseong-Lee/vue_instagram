@@ -14,6 +14,7 @@
     :dataList="dataList"
     :uiLevel="uiLevel"
     :blobURL="blobURL"
+    :selectedFilter="selectedFilter"
     @uploadedImage="blobURL = $event"
     @content="content = $event"
   />
@@ -47,7 +48,14 @@ export default {
       uiLevel: 0 /** router말고 tab기능으로 구현 */,
       blobURL: "",
       content: "",
+      selectedFilter: "",
     };
+  },
+  mounted() {
+    //mitt로 보낸 이벤트 수신은 mounted() 훅에서 받는게 관습
+    this.emitter.on("sendFilter", (filter) => {
+      this.selectedFilter = filter;
+    });
   },
   components: {
     ContainerComponent,
@@ -102,7 +110,7 @@ export default {
         date: "May 15",
         liked: false,
         content: this.content,
-        filter: "perpetua",
+        filter: this.selectedFilter,
       };
       //새 오브젝트 index 0으로 밀어넣음
       this.dataList.unshift(newPost);
