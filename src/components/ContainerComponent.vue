@@ -1,7 +1,12 @@
 <template>
   <div>
     <div v-if="uiLevel === 0">
-      <PostComponent :post="post" v-for="(post, i) in dataList" :key="i" />
+      <PostComponent
+        :post="post"
+        :idx="i"
+        v-for="(post, i) in $store.state.dataList"
+        :key="i"
+      />
     </div>
 
     <!-- 필터선택페이지 -->
@@ -42,9 +47,7 @@
         <textarea
           @input="$emit('content', $event.target.value)"
           class="write-box"
-        >
-write!</textarea
-        >
+        ></textarea>
       </div>
     </div>
   </div>
@@ -66,7 +69,7 @@ export default {
     FilterBoxComponent,
   },
   props: {
-    dataList: Array,
+    // dataList: Array,
     uiLevel: Number,
     blobURL: String,
     selectedFilter: String,

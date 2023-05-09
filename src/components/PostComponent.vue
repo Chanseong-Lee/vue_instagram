@@ -8,10 +8,12 @@
       <span class="profile-name">{{ post.name }}</span>
     </div>
     <div
+      @dblclick="setLikes"
       :class="`post-body ${post.filter}`"
       :style="`background-image: url(${post.postImage});`"
     ></div>
     <div class="post-content">
+      <!-- <p>{{ post.likes }} Likes</p> -->
       <p>{{ post.likes }} Likes</p>
       <p>
         <strong>{{ post.name }}</strong> {{ post.content }}
@@ -24,6 +26,12 @@
 export default {
   props: {
     post: Object,
+    idx: Number,
+  },
+  methods: {
+    setLikes() {
+      this.$store.commit("setLikes", this.idx);
+    },
   },
 };
 </script>
@@ -54,7 +62,7 @@ export default {
   /* background-image: url("https://placeimg.com/640/480/animals"); */
   height: 450px;
   background-position: center;
-  background-size: cover;
+  background-size: cover; /* cover : 지정한 요소를 다 덮도록 배경이미지를 확대/축소 */
 }
 .post-content {
   padding-left: 15px;

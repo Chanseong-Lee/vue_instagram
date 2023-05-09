@@ -1,7 +1,7 @@
 <template>
   <div class="header">
     <ul class="header-button-left">
-      <li @click="cancel">Cancel</li>
+      <li v-if="uiLevel === 1 || uiLevel === 2" @click="cancel">Cancel</li>
     </ul>
     <ul class="header-button-right">
       <li v-if="uiLevel === 1" @click="next">Next</li>
@@ -11,14 +11,13 @@
   </div>
 
   <ContainerComponent
-    :dataList="dataList"
     :uiLevel="uiLevel"
     :blobURL="blobURL"
     :selectedFilter="selectedFilter"
     @uploadedImage="blobURL = $event"
     @content="content = $event"
   />
-  <button @click="more">더보기</button>
+  <button @click="$store.dispatch('getAdditionalData')">더보기</button>
 
   <div class="footer">
     <ul class="footer-button-plus">
@@ -35,16 +34,14 @@
 </template>
 
 <script>
-import dataList from "./assets/dataList.js";
+// import dataList from "./assets/dataList.js";
 import ContainerComponent from "./components/ContainerComponent.vue";
 /* axios ajax */
-import axios from "axios";
 export default {
   name: "App",
   data() {
     return {
-      dataList: dataList,
-      btnCount: 0,
+      // dataList: dataList,
       uiLevel: 0 /** router말고 tab기능으로 구현 */,
       blobURL: "",
       content: "",
@@ -61,20 +58,6 @@ export default {
     ContainerComponent,
   },
   methods: {
-    more() {
-      axios
-        .get(
-          "https://codingapple1.github.io/vue/more" + this.btnCount + ".json"
-        )
-        .then((result) => {
-          if (this.btnCount < 2) {
-            this.dataList.push(result.data);
-            this.btnCount++;
-          } else {
-            return;
-          }
-        });
-    },
     upload(e) {
       //event parameter
       // e.target.files : 업로드한 file들이 담겨있다.
