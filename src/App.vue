@@ -17,7 +17,12 @@
     @uploadedImage="blobURL = $event"
     @content="content = $event"
   />
-  <button @click="$store.dispatch('getAdditionalData')">더보기</button>
+
+  <div class="button-group">
+    <button class="more-button" @click="$store.dispatch('getAdditionalData')">
+      More
+    </button>
+  </div>
 
   <div class="footer">
     <ul class="footer-button-plus">
@@ -36,6 +41,9 @@
 <script>
 // import dataList from "./assets/dataList.js";
 import ContainerComponent from "./components/ContainerComponent.vue";
+//mapState import
+import { mapMutations, mapState, mapActions } from "vuex";
+
 /* axios ajax */
 export default {
   name: "App",
@@ -46,6 +54,7 @@ export default {
       blobURL: "",
       content: "",
       selectedFilter: "",
+      카운터: 0,
     };
   },
   mounted() {
@@ -57,7 +66,23 @@ export default {
   components: {
     ContainerComponent,
   },
+  computed: {
+    //최초 로드되고 한번 작동되고 다시 실행안함. 값을 갖고있음
+    //보통 계산결과 값 저장 용
+    //연산결과가 오래걸리는 로직은 재랜더링이 되지않는 computed에 넣어두는것이 효과적
+    //위에서 호출할 경우에는 괄호를 사용하지 않고 변수명만사용
+    btnCount() {
+      //store에 저장되어있는 변수명으로 써두면 store변수를 간단히 쓸수 있다.
+      return this.$store.state.btnCount;
+    },
+    ...mapState(["dataList", "more"]),
+    //...mapState({변수명 : 'state변수', ...}),
+  },
   methods: {
+    //store의 mutations함수들을 가져올 수 있다.
+    ...mapMutations(["setLikes", "addDataList"]),
+    //store의 actions함수들을 가져올 수 있다.
+    ...mapActions(["getAdditionalData"]),
     upload(e) {
       //event parameter
       // e.target.files : 업로드한 file들이 담겨있다.
@@ -142,6 +167,17 @@ ul {
   width: 50px;
   cursor: pointer;
   margin-top: 10px;
+}
+.button-group {
+  width: 100%;
+  padding-bottom: 10px;
+  background-color: white;
+  text-align: center;
+}
+.more-button {
+  margin: auto;
+  background-color: white;
+  cursor: pointer;
 }
 .footer {
   width: 100%;

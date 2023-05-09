@@ -86,6 +86,7 @@ export default {
 .filters {
   overflow-x: scroll;
   white-space: nowrap;
+  padding-bottom: 5px;
 }
 .filter-1 {
   width: 100px;
