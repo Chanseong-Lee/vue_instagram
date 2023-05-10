@@ -50,11 +50,16 @@
         ></textarea>
       </div>
     </div>
+
+    <div v-if="uiLevel === 3">
+      <MyPageComponent />
+    </div>
   </div>
 </template>
 <script>
 import PostComponent from "./PostComponent.vue";
 import FilterBoxComponent from "./FilterBoxComponent.vue";
+import MyPageComponent from "./MyPageComponent.vue";
 
 import filterList from "../assets/filterList.js";
 
@@ -67,6 +72,7 @@ export default {
   components: {
     PostComponent,
     FilterBoxComponent,
+    MyPageComponent,
   },
   props: {
     // dataList: Array,

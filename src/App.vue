@@ -50,7 +50,7 @@ export default {
   data() {
     return {
       // dataList: dataList,
-      uiLevel: 0 /** router말고 tab기능으로 구현 */,
+      uiLevel: 3 /** router말고 tab기능으로 구현 */,
       blobURL: "",
       content: "",
       selectedFilter: "",
