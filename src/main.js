@@ -2,8 +2,11 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import axios from 'axios';
 import store from './store.js'
+
 /* mitt 라이브러리 import */
 import mitt from 'mitt'
+
+import './registerServiceWorker'
 
 let emitter = mitt();
 let app = createApp(App);
